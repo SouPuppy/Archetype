@@ -19,11 +19,10 @@
   }
 </script>
 
-
-<p>Selected: {selected}</p>
-
 <FilterSelect
   options={fruits}
   placeholder="Enter a fruit"
   onSelect={onSelectFruit}
 />
+
+<p>Selected: {selected}</p>

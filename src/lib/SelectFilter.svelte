@@ -54,16 +54,20 @@
     if (!isOpen || filtered.length === 0) return;
 
     switch (event.key) {
-      case "ArrowDown":
-        activeIndex = (activeIndex + 1) % filtered.length;
-        event.preventDefault();
-        scrollToActiveItem();
-        break;
-      case "ArrowUp":
-        activeIndex = (activeIndex - 1 + filtered.length) % filtered.length;
-        event.preventDefault();
-        scrollToActiveItem();
-        break;
+case "ArrowDown":
+  if (activeIndex < filtered.length - 1) {
+    activeIndex += 1;
+    scrollToActiveItem();
+  }
+  event.preventDefault();
+  break;
+case "ArrowUp":
+  if (activeIndex > 0) {
+    activeIndex -= 1;
+    scrollToActiveItem();
+  }
+  event.preventDefault();
+  break;
       case "Enter":
         event.preventDefault();
         if (activeIndex >= 0 && activeIndex < filtered.length) {

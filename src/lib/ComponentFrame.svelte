@@ -19,6 +19,12 @@
     border: 1px solid #eee;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     border-radius: 0;
+
+    /* ✅ 横向排列，左对齐 */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
   }
 
   .frame-title {
@@ -27,5 +33,6 @@
     font-size: 1.25rem;
     font-weight: 600;
     color: #111;
+    text-align: left;
   }
 </style>
