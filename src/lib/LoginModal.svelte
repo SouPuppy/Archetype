@@ -56,7 +56,7 @@
     <div class="w-full md:w-[61%] px-8 py-10 flex flex-col justify-center gap-0 text-left">
       <!-- Sign Up 标题 -->
 <div>
-  <h2 class="text-2xl font-semibold text-gray-900 mb-1">Sign Up</h2>
+  <h2 class="text-2xl font-semibold text-gray-900 mt-[-0.5em]">Sign Up</h2>
 
   <!-- 提示/错误区域 -->
   <div class="h-[3rem] mt-3 flex transition-all duration-300">
