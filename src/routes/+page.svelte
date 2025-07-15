@@ -10,6 +10,7 @@
   import DisplayVideoGallery from '$lib/display/DisplayVideoGallery.svelte';
   import DisplayVideoGalleryFull from "$lib/display/DisplayVideoGalleryFull.svelte";
   import DisplayAccountHome from "$lib/display/DisplayAccountHome.svelte";
+  import DisplayLoginModal from "$lib/display/DisplayLoginModal.svelte";
 
   import Line from "$lib/Line.svelte"
 </script>
@@ -17,6 +18,7 @@
 <DisplayAccountHome />
 <DisplayVideoGallery/>
 <DisplayVideoGalleryFull />
+<DisplayLoginModal />
 
 <ComponentFrame title="Input">
   <DisplayInput />
