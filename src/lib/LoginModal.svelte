@@ -68,9 +68,10 @@
       }
     >
       {#if emailTouched && email && !isEmailValid(email)}
-        <div class="font-semibold text-[#cc3333] bg-[#fff5f5] border border-[#cc3333] px-3 py-1 rounded text-sm text-center w-full max-w-sm">
-          Invalid E-mail address
-        </div>
+<div class="font-semibold text-gray-600 bg-gray-100 border border-gray-400 px-3 py-1 rounded text-sm text-center w-full max-w-sm">
+  Invalid E-mail address
+</div>
+
       {:else}
         <p class="text-sm text-gray-500">Join InuMate and enjoy tailored video experiences</p>
       {/if}
@@ -95,18 +96,20 @@
 
           <div class="absolute left-0 bottom-0 w-full h-[2px] scale-x-0 peer-hover:scale-x-100 peer-focus:scale-x-100 transition-transform origin-left bg-blue-600"></div>
 
-          {#if email}
-            <button
-              type="button"
-              on:click={() => {
-                email = "";
-                emailTouched = false;
-              }}
-              class="absolute right-1 top-1/2 transform -translate-y-1/2 p-1 text-gray-500 hover:text-gray-600 group"
-            >
-              <X class="w-4 h-4 stroke-[1.5] group-hover:stroke-[2]" />
-            </button>
-          {/if}
+{#if email}
+  <button
+    type="button"
+    on:mousedown|preventDefault
+    on:click={() => {
+      email = "";
+      emailTouched = false;
+    }}
+    class="absolute right-1 top-1/2 transform -translate-y-1/2 p-1 text-gray-500 hover:text-gray-600 group"
+  >
+    <X class="w-4 h-4 stroke-[1.5] group-hover:stroke-[2]" />
+  </button>
+{/if}
+
         </div>
 
         <!-- Password -->
@@ -163,7 +166,7 @@
       </form>
 
       <!-- Legal links -->
-      <div class="text-sm text-gray-500 mt-2">
+      <div class="text-sm text-gray-500 mt-6 mb-[-1rem]">
         Already have an account?
         <a href=" " class="text-blue-600 underline">Login</a><br />
         By signing up, you agree to our
