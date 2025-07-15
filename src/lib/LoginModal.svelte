@@ -1,13 +1,16 @@
-<!-- Login Step UI: 调整步骤圆圈垂直居中位置，并强制以右对齐为基准布局 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import X from '@lucide/svelte/icons/x';
+  import Eye from '@lucide/svelte/icons/eye';
+  import EyeOff from '@lucide/svelte/icons/eye-off';
 
-   let login_background = ""; //"/login_background.jpg";
+  export let login_background = "/login_background.jpg";
   const dispatch = createEventDispatcher();
 
   let email = "";
   let password = "";
+  let emailTouched = false;
+  let showPassword = false;
 
   function close() {
     dispatch('close');
@@ -24,13 +27,17 @@
     return 'strong';
   }
 
+  function isEmailValid(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
   $: strength = getStrength(password);
 </script>
 
 <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4">
   <div class="relative w-full max-w-2xl flex bg-white shadow-xl overflow-hidden border border-gray-200 rounded-md">
-
-    <!-- 关闭按钮 -->
+    
+    <!-- Close button -->
     <button
       on:click={close}
       class="absolute top-4 right-4 text-gray-400 hover:text-blue-600 transition"
@@ -39,57 +46,40 @@
       <X class="w-5 h-5" />
     </button>
 
-    <!-- 左图区域 -->
+    <!-- Left image -->
     <div
       class="hidden md:block w-[39%] bg-cover bg-center border-r border-gray-200"
       style="background-image: url({login_background});"
     ></div>
 
-    <!-- 中间步骤条 -->
-    <div class="absolute left-[calc(13%+1px)] top-0 bottom-0 flex items-center">
-      <div class="flex flex-col items-end justify-center h-full px-4">
-        <div class="flex items-center gap-3 mb-8">
-          <div class="text-sm text-right">
-            <div class="font-medium text-black">Finished</div>
-            <div class="text-gray-400">This is a description.</div>
-          </div>
-          <div class="relative flex flex-col items-center">
-            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-sm z-10">
-              ✓
-            </div>
-            <div class="h-10 w-0.5 bg-blue-600"></div>
-          </div>
-        </div>
-        <div class="flex items-center gap-3 mb-8">
-          <div class="text-sm text-right">
-            <div class="font-medium text-black">In Progress</div>
-            <div class="text-gray-400">This is a description.</div>
-          </div>
-          <div class="relative flex flex-col items-center">
-            <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold text-sm z-10">2</div>
-            <div class="h-10 w-0.5 bg-gray-300"></div>
-          </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <div class="text-sm text-right">
-            <div class="font-medium text-gray-400">Waiting</div>
-            <div class="text-gray-300">This is a description.</div>
-          </div>
-          <div class="relative flex flex-col items-center">
-            <div class="w-6 h-6 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-semibold text-sm z-10">3</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Right form -->
+    <div class="w-full md:w-[61%] px-8 py-10 flex flex-col justify-center gap-0 text-left">
+      <!-- Sign Up 标题 -->
+<div>
+  <h2 class="text-2xl font-semibold text-gray-900 mb-1">Sign Up</h2>
 
-    <!-- 右侧表单区域 -->
-    <div class="w-full md:w-[61%] px-8 py-10 flex flex-col justify-center gap-6 text-left ml-auto">
-      <div>
-        <h2 class="text-2xl font-semibold text-gray-900 mb-1">Sign Up</h2>
+  <!-- 提示/错误区域 -->
+  <div class="h-[4rem] flex transition-all duration-300">
+    <div
+      class={
+        emailTouched && email && !isEmailValid(email)
+          ? "flex items-center justify-center w-full"
+          : ""
+      }
+    >
+      {#if emailTouched && email && !isEmailValid(email)}
+        <div class="font-semibold text-[#cc3333] bg-[#fff5f5] border border-[#cc3333] px-3 py-1 rounded text-sm text-center w-full max-w-sm">
+          Invalid E-mail address
+        </div>
+      {:else}
         <p class="text-sm text-gray-500">Join InuMate and enjoy tailored video experiences</p>
-      </div>
-
+      {/if}
+    </div>
+  </div>
+</div>
       <form class="flex flex-col gap-4">
+
+        <!-- Email -->
         <div class="relative">
           <input
             type="text"
@@ -99,12 +89,19 @@
             autocorrect="off"
             autocapitalize="off"
             spellcheck={false}
-            class="text-sm px-1 py-0.5 border-b border-gray-300 hover:border-b-[2px] focus:border-blue-600 hover:border-blue-500 outline-none transition w-full"
+            on:blur={() => (emailTouched = true)}
+            class="peer text-sm px-1 py-0.5 border-b border-gray-300 outline-none w-full transition"
           />
+
+          <div class="absolute left-0 bottom-0 w-full h-[2px] scale-x-0 peer-hover:scale-x-100 peer-focus:scale-x-100 transition-transform origin-left bg-blue-600"></div>
+
           {#if email}
             <button
               type="button"
-              on:click={() => (email = "")}
+              on:click={() => {
+                email = "";
+                emailTouched = false;
+              }}
               class="absolute right-1 top-1/2 transform -translate-y-1/2 p-1 text-gray-500 hover:text-gray-600 group"
             >
               <X class="w-4 h-4 stroke-[1.5] group-hover:stroke-[2]" />
@@ -112,20 +109,40 @@
           {/if}
         </div>
 
+        <!-- Password -->
         <div class="relative">
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             placeholder="Password"
             bind:value={password}
-            class="text-sm px-1 py-0.5 border-b border-gray-300 hover:border-b-[2px] focus:border-blue-600 hover:border-blue-500 outline-none transition w-full"
+            class="peer text-sm px-1 py-0.5 border-b border-gray-300 
+                   outline-none w-full pr-8 transition"
           />
+
+          <div class="absolute left-0 bottom-0 w-full h-[2px] scale-x-0 peer-hover:scale-x-100 peer-focus:scale-x-100 transition-transform origin-left bg-blue-600"></div>
+
+          <!-- Toggle password -->
+          <button
+            type="button"
+            class="absolute right-1 top-1/2 transform -translate-y-1/2 p-1 text-gray-500 hover:text-gray-600 group"
+            on:click={() => (showPassword = !showPassword)}
+            aria-label="Toggle password visibility"
+          >
+            {#if showPassword}
+              <EyeOff class="w-4 h-4 stroke-[1.5] group-hover:stroke-[2]" />
+            {:else}
+              <Eye class="w-4 h-4 stroke-[1.5] group-hover:stroke-[2]" />
+            {/if}
+          </button>
+
+          <!-- Strength bar -->
           <div
             class="absolute left-0 bottom-[-6px] h-[4px] transition-all duration-300"
             style="
               width: {
                 strength === 'none' ? '0%' :
-                strength === 'weak' ? '33.3%' :
-                strength === 'medium' ? '66.6%' : '100%'
+                strength === 'weak' ? '20%' :
+                strength === 'medium' ? '40%' : '100%'
               };
               background-color: {
                 strength === 'none' ? 'transparent' :
@@ -136,17 +153,19 @@
           ></div>
         </div>
 
+        <!-- Submit -->
         <button
           type="submit"
-          class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 transition rounded"
+          class="mt-6 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 transition rounded"
         >
           Sign Up
         </button>
       </form>
 
-      <div class="text-sm text-gray-500">
+      <!-- Legal links -->
+      <div class="text-sm text-gray-500 mt-2">
         Already have an account?
-        <a href="#" class="text-blue-600 underline">Login</a><br />
+        <a href=" " class="text-blue-600 underline">Login</a><br />
         By signing up, you agree to our
         <a href="#" class="text-blue-600 underline"> Terms </a> and
         <a href="#" class="text-blue-600 underline"> Privacy </a>.
