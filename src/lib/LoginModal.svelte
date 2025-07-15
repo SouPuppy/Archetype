@@ -59,26 +59,11 @@
   <h2 class="text-2xl font-semibold text-gray-900 mb-1">Sign Up</h2>
 
   <!-- 提示/错误区域 -->
-  <div class="h-[4rem] flex transition-all duration-300">
-    <div
-      class={
-        emailTouched && email && !isEmailValid(email)
-          ? "flex items-center justify-center w-full"
-          : ""
-      }
-    >
-      {#if emailTouched && email && !isEmailValid(email)}
-<div class="font-semibold text-gray-600 bg-gray-100 border border-gray-400 px-3 py-1 rounded text-sm text-center w-full max-w-sm">
-  Invalid E-mail address
-</div>
-
-      {:else}
+  <div class="h-[3rem] mt-3 flex transition-all duration-300">
         <p class="text-sm text-gray-500">Join InuMate and enjoy tailored video experiences</p>
-      {/if}
-    </div>
   </div>
 </div>
-      <form class="flex flex-col gap-4">
+      <form class="flex flex-col gap-5">
 
         <!-- Email -->
         <div class="relative">
@@ -159,14 +144,14 @@
         <!-- Submit -->
         <button
           type="submit"
-          class="mt-6 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 transition rounded"
+          class="mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 transition rounded"
         >
           Sign Up
         </button>
       </form>
 
       <!-- Legal links -->
-      <div class="text-sm text-gray-500 mt-6 mb-[-1rem]">
+      <div class="text-sm text-gray-500 mt-10 mb-[-1rem]">
         Already have an account?
         <a href=" " class="text-blue-600 underline">Login</a><br />
         By signing up, you agree to our
